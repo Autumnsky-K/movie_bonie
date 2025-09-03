@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_bonie/features/movies/presentation/home_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:movie_bonie/features/movies/presentation/movie_detail_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -13,6 +14,15 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/',
         builder: (context, state) {
           return const HomeScreen();
+        },
+      ),
+      // 상세 페이지를 위한 새로운 라우트 추가
+      GoRoute(
+        path: '/movie/:id', // :id는 동적 세그먼트
+        builder: (context, state) {
+          // URL에서 :id 값을 추출
+          final String id = state.pathParameters['id']!;
+          return MovieDetailScreen(id: id);
         },
       ),
     ],
