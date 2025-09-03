@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_bonie/features/movies/presentation/home_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -10,11 +11,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/',
         builder: (context, state) {
-          // TODO 홈화면위젯으로 교체 필요
-          return const Scaffold(
-              body: Center(
-            child: Text('Home Screen'),
-          ));
+          return const HomeScreen();
         },
       ),
     ],
