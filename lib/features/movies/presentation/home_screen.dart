@@ -1,14 +1,30 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_bonie/features/movies/presentation/widgets/movie_card.dart';
 
 import 'providers/movie_providers.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  // 디바운싱을 위한 Timer 객체 선언
+  Timer? _debounce;
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     // 1. searchQueryProvider를 watch하여 현재 검색어를 가져오기
     final searchQuery = ref.watch(searchQueryProvider);
     // 2. 현재 검색어(searchQuery)를 moviesProvider.family에 전달하여 영화 목록 가져오기
@@ -30,7 +46,12 @@ class HomeScreen extends ConsumerWidget {
               ),
               // 3. TextField의 값이 변경될 때마다 searchQueryProvider의 상태 업데이트
               onChanged: (query) {
-                ref.read(searchQueryProvider.notifier).state = query;
+                // 기존 타이머가 있으면 취소
+                if (_debounce?.isActive ?? false) _debounce!.cancel();
+                // 500ms 후에 검색어 상태를 업데이트하는 새로운 타이머 설정
+                _debounce = Timer(const Duration(milliseconds: 500), () {
+                  ref.read(searchQueryProvider.notifier).state = query;
+                });
               },
             ),
           ),
