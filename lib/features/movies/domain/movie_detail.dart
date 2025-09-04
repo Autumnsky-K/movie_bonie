@@ -15,6 +15,7 @@ class MovieDetail {
   final String poster;
   final String imdbRating;
   final String imdbID;
+  final String type;
 
   MovieDetail({
     required this.title,
@@ -33,6 +34,7 @@ class MovieDetail {
     required this.poster,
     required this.imdbRating,
     required this.imdbID,
+    required this.type,
   });
 
   factory MovieDetail.fromJson(Map<String, dynamic> json) {
@@ -53,6 +55,7 @@ class MovieDetail {
       poster: json['Poster'] ?? 'N/A',
       imdbRating: json['imdbRating'] ?? 'N/A',
       imdbID: json['imdbID'] ?? 'N/A',
+      type: json['Type'] ?? 'N/A',
     );
   }
 }

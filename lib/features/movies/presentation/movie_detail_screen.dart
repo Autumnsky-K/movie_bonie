@@ -1,20 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'providers/movie_providers.dart';
+import 'providers/favorites_provider.dart';
+import 'package:movie_bonie/features/movies/domain/movie.dart';
 
 class MovieDetailScreen extends ConsumerWidget {
   final String id; // 라우터로부터 전달받을 영화 ID
-
   const MovieDetailScreen({super.key, required this.id});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // id를 사용하여 movieDetailProvider를 구독
     final movieDetailAsyncValue = ref.watch(movieDetailProvider(id));
+    // "좋아요" 목록 상태를 감시
+    final favorites = ref.watch(favoritesProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Movie Detail'),
+        title: movieDetailAsyncValue.when(
+          data: (movieDetail) {
+            // 현재 영화가 "좋아요" 목록에 있는지 확인
+            final isFavorite =
+                favorites.any((m) => m.imdbID == movieDetail.imdbID);
+            return FloatingActionButton(
+              onPressed: () {
+                // 상세 정보 (MovieDetail)에서 목록에 필요한 정보 (Movie)만으로 객체를 생성
+                final movie = Movie(
+                  title: movieDetail.title,
+                  year: movieDetail.year,
+                  imdbID: movieDetail.imdbID,
+                  type: movieDetail.type,
+                  poster: movieDetail.poster,
+                );
+                // Notifier의 메서드를 호출하여 상태를 변경
+                ref.read(favoritesProvider.notifier).toggleFavorite(movie);
+              },
+              child: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.red : null,
+              ),
+            );
+          },
+          loading: () => const SizedBox.shrink(), // 로딩 중에는 버튼 숨김
+          error: (_, __) => const SizedBox.shrink(), // 에러 시 버튼 숨김
+        ),
       ),
       body: movieDetailAsyncValue.when(
         data: (movie) => SingleChildScrollView(
