@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:movie_bonie/features/movies/presentation/widgets/movie_card.dart';
 
 import 'providers/movie_providers.dart';
@@ -33,6 +34,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Movie Bonie'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () {
+              // '내 보관함' 화면으로 이동
+              context.push('/favorites');
+            },
+          )
+        ],
       ),
       // moviesAsyncValue의 상태에 따라 다른 위젯을 보여줌
       body: Column(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_bonie/features/movies/presentation/favorites_screen.dart';
 import 'package:movie_bonie/features/movies/presentation/home_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movie_bonie/features/movies/presentation/movie_detail_screen.dart';
@@ -25,6 +26,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           return MovieDetailScreen(id: id);
         },
       ),
+      // 내 보관함 페이지를 위한 새로운 라우트 추가
+      GoRoute(
+        path: '/favorites',
+        builder: (context, state) {
+          return const FavoritesScreen();
+        },
+      )
     ],
   );
 });
