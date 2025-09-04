@@ -13,7 +13,7 @@ class MovieCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         // 탭하면 /movie/${movie.imdbID} 경로로 이동
-        context.go('/movie/${movie.imdbID}');
+        context.push('/movie/${movie.imdbID}');
       },
       child: Card(
         // 카드 테두리를 둥글게 처리
