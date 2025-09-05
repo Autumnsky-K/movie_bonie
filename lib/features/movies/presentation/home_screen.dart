@@ -51,7 +51,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               decoration: const InputDecoration(
-                hintText: 'Search movies...',
+                hintText: '영화 제목을 검색해보세요...',
                 border: OutlineInputBorder(),
               ),
               // 3. TextField의 값이 변경될 때마다 searchQueryProvider의 상태 업데이트
@@ -69,7 +69,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             child: moviesAsyncValue.when(
               data: (movies) {
                 if (movies.isEmpty) {
-                  return const Center(child: Text('No movies found.'));
+                  return const Center(child: Text('검색 결과가 없습니다.'));
                 }
                 return GridView.builder(
                   // key를 추가하여 검색 결과가 바뀔 때 GridView를 새로 그리기
@@ -102,7 +102,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 // );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (err, stack) => Center(child: Text('Error: $err')),
+              error: (err, stack) => Center(child: Text('오류가 발생했습니다: $err')),
             ),
           ),
         ],

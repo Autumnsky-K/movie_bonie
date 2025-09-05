@@ -65,16 +65,16 @@ class MovieDetailScreen extends ConsumerWidget {
               Text(movie.plot),
               const SizedBox(height: 16),
               // 감독
-              Text('Director: ${movie.director}'),
+              Text('감독: ${movie.director}'),
               // 배우
-              Text('Actors: ${movie.actors}'),
+              Text('배우: ${movie.actors}'),
               // 평점
-              Text('IMDb Rating: ${movie.imdbRating}'),
+              Text('IMDb 평점: ${movie.imdbRating}'),
             ],
           ),
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text('Error: $err')),
+        error: (err, stack) => Center(child: Text('오류가 발생했습니다: $err')),
       ),
     );
   }
