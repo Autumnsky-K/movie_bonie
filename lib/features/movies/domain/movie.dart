@@ -23,4 +23,15 @@ class Movie {
       poster: json['Poster'],
     );
   }
+
+  // Movie 객체를 JSON으로 변환하는 메서드
+  Map<String, dynamic> toJson() {
+    return {
+      'Title': title,
+      'Year': year,
+      'imdbID': imdbID,
+      'Type': type,
+      'Poster': poster,
+    };
+  }
 }
