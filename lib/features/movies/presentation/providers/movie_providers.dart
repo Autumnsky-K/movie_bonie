@@ -4,8 +4,10 @@ import '../../data/movie_repository.dart';
 import '../../domain/movie.dart';
 import '../../domain/movie_detail.dart';
 
+const String initialSearchQuery = 'star';
+
 // 검색어를 관리하는 StateProvider
-final searchQueryProvider = StateProvider<String>((ref) => 'star');
+final searchQueryProvider = StateProvider<String>((ref) => initialSearchQuery);
 
 // '.family'를 사용하여 파라미터(query)를 받을 수 있는 FutureProvider를 생성
 final moviesProvider = FutureProvider.family<List<Movie>, String>((ref, query) {

@@ -60,7 +60,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 if (_debounce?.isActive ?? false) _debounce!.cancel();
                 // 500ms 후에 검색어 상태를 업데이트하는 새로운 타이머 설정
                 _debounce = Timer(const Duration(milliseconds: 500), () {
-                  ref.read(searchQueryProvider.notifier).state = query;
+                  if (query.isNotEmpty) {
+                    ref.read(searchQueryProvider.notifier).state = query;
+                  } else {
+                    // 검색어가 없을 때 초기 검색어로 재설정
+                    ref.read(searchQueryProvider.notifier).state =
+                        initialSearchQuery;
+                  }
                 });
               },
             ),
