@@ -47,3 +47,11 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+
+# Freezed and JSON Serializable files
+*.freezed.dart
+*.g.dart
+
+# Others
+GEMINI.md
+WORKOUT.md
